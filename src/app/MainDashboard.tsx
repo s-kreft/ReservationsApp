@@ -5,6 +5,7 @@ import RoomList from "./rooms/RoomsList";
 import { Room } from "./types";
 import roomsData from "./data/roomsData.json";
 import { ReusableModal } from "./dashboards/reusable/ReusableModal";
+import NewRoomForm from "./rooms/NewRoomForm";
 
 // export const LoginContext = createContext();
 
@@ -26,6 +27,10 @@ export default function MainDashboard() {
     setIsModalOpen(false);
   };
 
+  const onNewRoomSubmit = (room: Room) => {
+    setRooms([...rooms, room]);
+  };
+
   return (
     <>
       <button className="btn btn-outline btn-success" onClick={openModal}>
@@ -34,7 +39,7 @@ export default function MainDashboard() {
       <RoomList rooms={rooms}></RoomList>
       {isModalOpen && (
         <ReusableModal isOpen={isModalOpen} onClose={closeModal}>
-          <div>MODAL CONTENT GOES HERE</div>
+          <NewRoomForm onNewRoomSubmit={onNewRoomSubmit}></NewRoomForm>
         </ReusableModal>
       )}
     </>
