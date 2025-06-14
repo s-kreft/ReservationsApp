@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "placeToRentId": 101,
+    "userName": "Alice Johnson",
+    "dateStart": "2025-07-01T14:00:00.000Z",
+    "dateEnd": "2025-07-05T10:00:00.000Z",
+    "comments": "Please prepare early check-in if possible."
+  },
+  {
+    "id": 2,
+    "placeToRentId": 102,
+    "userName": "Bob Smith",
+    "dateStart": "2025-06-15T15:00:00.000Z",
+    "dateEnd": "2025-06-18T11:00:00.000Z",
+    "comments": "Traveling with a small dog."
+  },
+  {
+    "id": 3,
+    "placeToRentId": 101,
+    "userName": "Charlie Davis",
+    "dateStart": "2025-07-10T16:00:00.000Z",
+    "dateEnd": "2025-07-12T09:00:00.000Z",
+    "comments": "Need parking space confirmed."
+  },
+  {
+    "id": 4,
+    "placeToRentId": 103,
+    "userName": "Diana Clark",
+    "dateStart": "2025-08-01T13:00:00.000Z",
+    "dateEnd": "2025-08-07T12:00:00.000Z",
+    "comments": "Celebrating a birthday—any surprises appreciated!"
+  },
+  {
+    "id": 5,
+    "placeToRentId": 104,
+    "userName": "Ethan Wright",
+    "dateStart": "2025-06-20T17:00:00.000Z",
+    "dateEnd": "2025-06-25T11:30:00.000Z",
+    "comments": "Arriving late at night—please provide self check-in instructions."
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Ocean View Suite",
+    "description": "A spacious suite with a beautiful view of the ocean. Includes a king-size bed and private balcony."
+  },
+  {
+    "id": 2,
+    "name": "Mountain Retreat",
+    "description": "A cozy room nestled in the mountains. Perfect for a quiet and relaxing getaway."
+  },
+  {
+    "id": 3,
+    "name": "City Studio",
+    "description": "A compact studio apartment located in the heart of the city, ideal for business travelers."
+  }
+]
