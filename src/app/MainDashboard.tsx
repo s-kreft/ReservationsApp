@@ -4,8 +4,9 @@ import Login from "./login/Login";
 import RoomList from "./rooms/RoomsList";
 import { Room } from "./types";
 import roomsData from "./data/roomsData.json";
-import { ReusableModal } from "./dashboards/reusable/ReusableModal";
+import { ReusableModal } from "./components/ReusableModal";
 import NewRoomForm from "./rooms/NewRoomForm";
+import NavBar from "./components/NavBar";
 
 // export const LoginContext = createContext();
 
@@ -33,6 +34,7 @@ export default function MainDashboard() {
 
   return (
     <>
+      <NavBar></NavBar>
       <button className="btn btn-outline btn-success" onClick={openModal}>
         Add New Room
       </button>
