@@ -1,44 +1,73 @@
 "use client";
 
 import DatePicker from "react-datepicker";
+import { Reservation, Room } from "../types";
+import { useFormik } from "formik";
 
-export default function BookingForm() {
+export default function BookingForm({
+  onNewReservationSubmit,
+}: {
+  onNewReservationSubmit: (reservation: Reservation) => void;
+}) {
+  const formik = useFormik({
+    initialValues: {
+      userName: "",
+      dateStart: new Date(),
+      dateEnd: new Date(),
+      comments: "",
+    },
+    onSubmit: (values) => {
+      let reservation = {
+        userName: values.userName,
+        dateStart: values.dateStart,
+        dateEnd: values.dateEnd,
+        comments: values.comments,
+      } as Reservation;
+
+      onNewReservationSubmit(reservation);
+      formik.resetForm();
+    },
+  });
   return (
     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <legend className="fieldset-legend">Booking Form</legend>
+      <form onSubmit={formik.handleSubmit}>
+        <legend className="fieldset-legend">Booking Form</legend>
 
-      <label className="label">Place to rent</label>
-      <input type="text" className="input" placeholder="my-awesome-page" />
+        <label className="label">Place to rent</label>
+        <input
+          id="userName"
+          type="text"
+          className="input"
+          onChange={formik.handleChange}
+          value={formik.values.userName}
+        />
 
-      <label className="label">Start Date</label>
-      <input
-        id="date"
-        className="input"
-        type="date"
-        // onChange={(e) => {
-        //   setDate(e.target.value);
-        //   validate();
-        // }}
-        // value={date}
-      />
+        <label className="label">Start Date</label>
+        <DatePicker
+          selected={formik.values.dateStart}
+          onChange={(date) => formik.setFieldValue("dateStart", date)}
+          className="input"
+        />
 
-      <label className="label">End Date</label>
-      <input
-        id="date"
-        className="input"
-        type="date"
-        // onChange={(e) => {
-        //   setDate(e.target.value);
-        //   validate();
-        // }}
-        // value={date}
-      />
+        <label className="label">End Date</label>
+        <DatePicker
+          selected={formik.values.dateEnd}
+          onChange={(date) => formik.setFieldValue("dateEnd", date)}
+          className="input"
+        />
 
-      <label className="label">Comments</label>
-      <input type="text" className="input" placeholder="My awesome page" />
-
-      <label className="label"></label>
-      <button className="btn btn-soft btn-primary">Submit</button>
+        <label className="label">Comments</label>
+        <input
+          id="comments"
+          type="text"
+          className="input"
+          onChange={formik.handleChange}
+          value={formik.values.comments}
+          placeholder="Any notes?"
+        />
+        <label className="label"></label>
+        <button className="btn btn-soft btn-primary">Submit</button>
+      </form>
     </fieldset>
   );
 }
