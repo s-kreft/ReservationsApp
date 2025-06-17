@@ -1,3 +1,5 @@
+import SignIn from "../login/sign-in";
+
 export default function NavBar() {
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -40,6 +42,7 @@ export default function NavBar() {
         <a className="btn btn-ghost text-xl">ReservationsApp</a>
       </div>
       <div className="navbar-end">
+        <SignIn></SignIn>
         <button className="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"

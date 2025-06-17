@@ -49,7 +49,6 @@ export default function MainDashboard() {
 
   return (
     <>
-      <NavBar></NavBar>
       <button className="btn btn-outline btn-success" onClick={openModal}>
         Add New Room
       </button>
