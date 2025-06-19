@@ -13,7 +13,7 @@ export enum UserActionType {
 export type UserAction =
   | { type: UserActionType.SetUsers; users: User[] }
   | { type: UserActionType.AddUser; user: User }
-  | { type: UserActionType.Remove; userId: number }
+  | { type: UserActionType.Remove; userId: string }
   | { type: UserActionType.Update; user: User };
 
 type UserContextType = {

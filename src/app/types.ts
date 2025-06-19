@@ -8,7 +8,7 @@ export type Reservation = {
 export type UserRole = "customer" | "staff" | "admin";
 
 export type User = {
-  id: number;
+  id: string;
   name: string;
   password: string;
   role: UserRole;

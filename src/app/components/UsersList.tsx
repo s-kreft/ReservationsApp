@@ -3,10 +3,13 @@
 import { useContext, useRef, useState } from "react";
 import { UserActionType, UserContext } from "../lib/usersContext";
 import { User } from "../types";
-import { deleteUserById, updateUserById } from "../data/credentials";
+import {
+  handleDeleteUser as handleDelete,
+  handleUpdateUser,
+} from "../admin/users/page";
 import EditUser from "./EditUser";
 
-export default function UsersList({ users }: { users: Promise<User[]> }) {
+export default function UsersList() {
   const DeleteUserModal = useRef<HTMLDialogElement>(null);
   const EditUserModal = useRef<HTMLDialogElement>(null);
   const { users: savedUsers, dispatch } = useContext(UserContext);
@@ -17,15 +20,9 @@ export default function UsersList({ users }: { users: Promise<User[]> }) {
     EditUserModal.current?.showModal();
   };
 
-  const closeEditUserModal = () => {};
-
-  const openRemoveUserModal = () => {};
-
-  const closeRemoveUserModal = () => {};
-
   const handleDeleteUser = () => {
     if (selectedUser) {
-      deleteUserById(selectedUser.id).then(() => {
+      handleDelete(selectedUser.id.toString()).then(() => {
         dispatch({
           type: UserActionType.Remove,
           userId: selectedUser.id,
@@ -36,9 +33,8 @@ export default function UsersList({ users }: { users: Promise<User[]> }) {
 
   const onsubmit = (user: User) => {
     if (!user) return;
-    updateUserById(user.id, user).then(() => {
+    handleUpdateUser(user).then(() => {
       dispatch({ type: UserActionType.Update, user });
-      closeEditUserModal();
     });
   };
   return (
@@ -80,25 +76,15 @@ export default function UsersList({ users }: { users: Promise<User[]> }) {
                   onClick={() => {
                     setSelectedUser(user);
                     DeleteUserModal.current?.showModal();
-                    openRemoveUserModal();
                   }}
                 >
                   Remove
                 </button>
               </td>
-              {/* <td>{user.status}</td> */}
             </tr>
           ))}
         </tbody>
       </table>
-      {/* {isEditUserModalOpen && (
-        <ReusableModal
-          isOpen={isEditUserModalOpen}
-          onClose={closeEditUserModal}
-        >
-          EDIT
-        </ReusableModal>
-      )} */}
 
       {
         <dialog ref={DeleteUserModal} id="remove-user-modal" className="modal">
@@ -112,7 +98,7 @@ export default function UsersList({ users }: { users: Promise<User[]> }) {
                 >
                   Remove
                 </button>
-                <button className="btn" onClick={() => closeRemoveUserModal()}>
+                <button className="btn" onClick={() => {}}>
                   Close
                 </button>
               </form>
