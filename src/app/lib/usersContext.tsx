@@ -5,9 +5,12 @@ import { User } from "../types";
 
 export enum UserActionType {
   AddUser,
+  Remove,
 }
 
-export type UserAction = { type: UserActionType.AddUser; user: User };
+export type UserAction =
+  | { type: UserActionType.AddUser; user: User }
+  | { type: UserActionType.Remove; userId: number };
 
 type UserContextType = {
   users: User[];
@@ -31,6 +34,9 @@ export default function UserProvider({
     switch (action.type) {
       case UserActionType.AddUser: {
         return [...state, action.user];
+      }
+      case UserActionType.Remove: {
+        return state.filter((user) => user.id !== action.userId);
       }
     }
   }

@@ -4,12 +4,14 @@ export type AddExpenseFormModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  buttons?: HTMLButtonElement[];
 };
 
 export const ReusableModal: React.FC<AddExpenseFormModalProps> = ({
   isOpen,
   onClose,
   children,
+  buttons = [],
 }) => {
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -28,7 +30,15 @@ export const ReusableModal: React.FC<AddExpenseFormModalProps> = ({
           {children}
           <div className="modal-action">
             <form method="dialog">
-              {/* If there is a button in form, it will close the modal */}
+              {buttons.map((button, index) => (
+                <button
+                  key={index}
+                  className="btn"
+                  onClick={() => button.click()}
+                >
+                  {button.textContent}
+                </button>
+              ))}
               <button className="btn" onClick={() => onClose()}>
                 Close
               </button>

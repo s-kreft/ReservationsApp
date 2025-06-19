@@ -1,14 +1,19 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { UserContext } from "../lib/usersContext";
+import { useContext, useRef, useState } from "react";
+import { UserActionType, UserContext } from "../lib/usersContext";
 import { ReusableModal } from "./ReusableModal";
 import { is } from "react-day-picker/locale";
+import { User } from "../types";
+import { deleteUserById } from "../data/credentials";
 
 export default function UsersList() {
+  const DeleteUserModal = useRef<HTMLDialogElement>(null);
   const { users, dispatch } = useContext(UserContext);
   const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
   const [isRemoveUserModalOpen, setIsRemoveUserModalOpen] = useState(false);
+
+  const [selectedUser, setSelectedUser] = useState<User>();
 
   const openUsersListModal = () => {
     setIsEditUserModalOpen(true);
@@ -26,6 +31,16 @@ export default function UsersList() {
     setIsRemoveUserModalOpen(false);
   };
 
+  const DeleteUser = () => {
+    if (selectedUser) {
+      deleteUserById(selectedUser.id).then(() => {
+        dispatch({
+          type: UserActionType.Remove,
+          userId: selectedUser.id,
+        });
+      });
+    }
+  };
   return (
     <div className="overflow-x-auto">
       <table className="table w-full">
@@ -54,6 +69,7 @@ export default function UsersList() {
                 <button
                   className="btn btn-sm btn-primary"
                   onClick={() => {
+                    setSelectedUser(user);
                     openUsersListModal();
                   }}
                 >
@@ -62,6 +78,8 @@ export default function UsersList() {
                 <button
                   className="btn btn-sm btn-secondary"
                   onClick={() => {
+                    setSelectedUser(user);
+                    DeleteUserModal.current?.showModal();
                     openRemoveUsertModal();
                   }}
                 >
@@ -81,13 +99,26 @@ export default function UsersList() {
           EDIT
         </ReusableModal>
       )}
+
       {isRemoveUserModalOpen && (
-        <ReusableModal
-          isOpen={isRemoveUserModalOpen}
-          onClose={closeRemoveUserModal}
-        >
-          Remove User?
-        </ReusableModal>
+        <dialog ref={DeleteUserModal} id="reusable_modal" className="modal">
+          <div className="modal-box">
+            Remove User?
+            <div className="modal-action">
+              <form method="dialog">
+                <button
+                  className="btn btn-warning"
+                  onClick={() => DeleteUser()}
+                >
+                  Remove
+                </button>
+                <button className="btn" onClick={() => closeRemoveUserModal()}>
+                  Close
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       )}
     </div>
   );
