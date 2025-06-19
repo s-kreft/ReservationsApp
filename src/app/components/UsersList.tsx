@@ -2,36 +2,28 @@
 
 import { useContext, useRef, useState } from "react";
 import { UserActionType, UserContext } from "../lib/usersContext";
-import { ReusableModal } from "./ReusableModal";
-import { is } from "react-day-picker/locale";
 import { User } from "../types";
-import { deleteUserById } from "../data/credentials";
+import { deleteUserById, updateUserById } from "../data/credentials";
+import EditUser from "./EditUser";
 
-export default function UsersList() {
+export default function UsersList({ users }: { users: Promise<User[]> }) {
   const DeleteUserModal = useRef<HTMLDialogElement>(null);
-  const { users, dispatch } = useContext(UserContext);
-  const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
-  const [isRemoveUserModalOpen, setIsRemoveUserModalOpen] = useState(false);
+  const EditUserModal = useRef<HTMLDialogElement>(null);
+  const { users: savedUsers, dispatch } = useContext(UserContext);
 
   const [selectedUser, setSelectedUser] = useState<User>();
 
-  const openUsersListModal = () => {
-    setIsEditUserModalOpen(true);
+  const openEditUserModal = () => {
+    EditUserModal.current?.showModal();
   };
 
-  const closeUsersListModal = () => {
-    setIsEditUserModalOpen(false);
-  };
+  const closeEditUserModal = () => {};
 
-  const openRemoveUsertModal = () => {
-    setIsRemoveUserModalOpen(true);
-  };
+  const openRemoveUserModal = () => {};
 
-  const closeRemoveUserModal = () => {
-    setIsRemoveUserModalOpen(false);
-  };
+  const closeRemoveUserModal = () => {};
 
-  const DeleteUser = () => {
+  const handleDeleteUser = () => {
     if (selectedUser) {
       deleteUserById(selectedUser.id).then(() => {
         dispatch({
@@ -40,6 +32,14 @@ export default function UsersList() {
         });
       });
     }
+  };
+
+  const onsubmit = (user: User) => {
+    if (!user) return;
+    updateUserById(user.id, user).then(() => {
+      dispatch({ type: UserActionType.Update, user });
+      closeEditUserModal();
+    });
   };
   return (
     <div className="overflow-x-auto">
@@ -54,7 +54,7 @@ export default function UsersList() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {savedUsers.map((user) => (
             <tr key={user.id}>
               <td>
                 <img
@@ -70,7 +70,7 @@ export default function UsersList() {
                   className="btn btn-sm btn-primary"
                   onClick={() => {
                     setSelectedUser(user);
-                    openUsersListModal();
+                    openEditUserModal();
                   }}
                 >
                   Edit
@@ -80,7 +80,7 @@ export default function UsersList() {
                   onClick={() => {
                     setSelectedUser(user);
                     DeleteUserModal.current?.showModal();
-                    openRemoveUsertModal();
+                    openRemoveUserModal();
                   }}
                 >
                   Remove
@@ -91,24 +91,24 @@ export default function UsersList() {
           ))}
         </tbody>
       </table>
-      {isEditUserModalOpen && (
+      {/* {isEditUserModalOpen && (
         <ReusableModal
           isOpen={isEditUserModalOpen}
-          onClose={closeUsersListModal}
+          onClose={closeEditUserModal}
         >
           EDIT
         </ReusableModal>
-      )}
+      )} */}
 
-      {isRemoveUserModalOpen && (
-        <dialog ref={DeleteUserModal} id="reusable_modal" className="modal">
+      {
+        <dialog ref={DeleteUserModal} id="remove-user-modal" className="modal">
           <div className="modal-box">
             Remove User?
             <div className="modal-action">
               <form method="dialog">
                 <button
                   className="btn btn-warning"
-                  onClick={() => DeleteUser()}
+                  onClick={() => handleDeleteUser()}
                 >
                   Remove
                 </button>
@@ -116,6 +116,19 @@ export default function UsersList() {
                   Close
                 </button>
               </form>
+            </div>
+          </div>
+        </dialog>
+      }
+
+      {selectedUser && (
+        <dialog ref={EditUserModal} id="edit-user-modal" className="modal">
+          <div className="modal-box">
+            <div className="modal-action">
+              <EditUser
+                user={selectedUser}
+                onSubmit={(user) => onsubmit(user)}
+              ></EditUser>
             </div>
           </div>
         </dialog>

@@ -1,7 +1,7 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 import GitHub from "next-auth/providers/github";
-import { users } from "./app/data/credentials";
-
+import { getUsers } from "./app/data/credentials";
+import { JWT } from "next-auth/jwt";
 declare module "next-auth" {
   interface Session {
     user: {
@@ -10,16 +10,11 @@ declare module "next-auth" {
   }
 }
 
-// declare module "next-auth/jwt" {
-//   interface JWT {
-//     role: string;
-//   }
-// }
-// declare module "next-auth/jwt" {
-//   interface JWT {
-//     role: string;
-//   }
-// }
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: string;
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -35,7 +30,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
+      const users = await getUsers();
       if (user) {
         token.id = user.id;
         let cachedUser = users.find((u) => u.name === user.name);
