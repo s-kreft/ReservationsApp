@@ -1,6 +1,6 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 import GitHub from "next-auth/providers/github";
-import { DataSourceContext } from "./data/DataSource";
+import { users } from "./app/data/credentials";
 
 declare module "next-auth" {
   interface Session {
@@ -9,8 +9,6 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 }
-
-import { JWT } from "next-auth/jwt";
 
 declare module "next-auth/jwt" {
   interface JWT {
@@ -35,9 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        let cachedUser = DataSourceContext.users.find(
-          (u) => u.name === user.name
-        );
+        let cachedUser = users.find((u) => u.name === user.name);
         if (cachedUser) {
           token.role = "admin";
         } else {

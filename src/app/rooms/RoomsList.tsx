@@ -11,9 +11,7 @@ export default function RoomList({
 }: RoomListProps) {
   return (
     <ul className="list bg-base-100 rounded-box shadow-md">
-      <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
-        Most played songs this week
-      </li>
+      <li className="p-4 pb-2 text-xs opacity-60 tracking-wide"></li>
 
       {rooms.map((room) => (
         // <li key={room.id} className="p-4 border-b border-base-300">
