@@ -1,4 +1,5 @@
 import SignIn from "../login/sign-in";
+import { LanguageSwitch } from "./LanguageSwitch";
 
 export default function NavBar() {
   return (
@@ -36,6 +37,9 @@ export default function NavBar() {
               <a>About</a>
             </li>
           </ul>
+        </div>
+        <div>
+          <LanguageSwitch></LanguageSwitch>
         </div>
       </div>
       <div className="navbar-center">
