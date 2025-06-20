@@ -8,10 +8,12 @@ import { ReusableModal } from "./components/ReusableModal";
 import NewRoomForm from "./rooms/NewRoomForm";
 import NavBar from "./components/NavBar";
 import BookingForm from "./reservation/BookingForm";
+import { useTranslation } from "react-i18next";
 
 // export const LoginContext = createContext();
 
 export default function MainDashboard() {
+  const { t } = useTranslation();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,7 +52,7 @@ export default function MainDashboard() {
   return (
     <>
       <button className="btn btn-outline btn-success" onClick={openModal}>
-        Add New Room
+        {t("Add New Room")}
       </button>
       <RoomList
         rooms={rooms}
