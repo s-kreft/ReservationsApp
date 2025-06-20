@@ -13,12 +13,12 @@ export default function RoomList({
     <ul className="list bg-base-100 rounded-box shadow-md">
       <li className="p-4 pb-2 text-xs opacity-60 tracking-wide"></li>
 
-      {rooms.map((room) => (
+      {rooms.map((room, index) => (
         // <li key={room.id} className="p-4 border-b border-base-300">
         //   <h3 className="font-bold">{room.name}</h3>
         //   <p>{room.description}</p>
         // </li>
-        <li className="list-row">
+        <li className="list-row" key={`room-` + index}>
           <div>
             <img
               className="size-10 rounded-box"
