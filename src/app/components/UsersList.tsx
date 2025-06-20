@@ -37,6 +37,7 @@ export default function UsersList() {
       dispatch({ type: UserActionType.Update, user });
     });
   };
+
   return (
     <div className="overflow-x-auto">
       <table className="table w-full">

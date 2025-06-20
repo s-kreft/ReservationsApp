@@ -9,6 +9,7 @@ export default function EditUser({
   user: User;
   onSubmit: (user: User) => void;
 }) {
+  const { name, role } = user;
   const [username, setUsername] = React.useState(user.name);
   const [email, setEmail] = React.useState(user.role);
   return (
@@ -20,7 +21,7 @@ export default function EditUser({
           type="text"
           id="username"
           className="input form-control w-full"
-          defaultValue={user.name}
+          defaultValue={name}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -30,13 +31,13 @@ export default function EditUser({
           type="text"
           id="email"
           className="input form-control w-full"
-          defaultValue={user.role}
+          defaultValue={role}
           onChange={(e) => setEmail((e.target.value as UserRole) || "customer")}
         />
       </div>
       <button
         type="submit"
-        className="btn btn-primary mt-2"
+        className="btn btn-primary mt-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
         onClick={() => {
           onSubmit({ ...user, name: username, role: email });
         }}
