@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import Login from "./login/Login";
 import RoomList from "./rooms/RoomsList";
+import { db } from "@/app/data/credentials";
 import { Reservation, Room } from "./types";
-import roomsData from "./data/roomsData.json";
 import { ReusableModal } from "./components/ReusableModal";
 import NewRoomForm from "./rooms/NewRoomForm";
 import NavBar from "./components/NavBar";
@@ -20,9 +20,21 @@ export default function MainDashboard() {
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
 
   useEffect(() => {
-    const loadedRooms = roomsData as Room[];
-
-    setRooms(loadedRooms);
+    // const loadedRooms = roomsData as Room[];
+    fetch(`http://localhost:3000/api/rooms`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      console.log("Response:", response);
+      const loadedRooms = response.json() as Promise<Room[]>;
+      loadedRooms.then((rooms) => {
+        console.log("Loaded rooms:", rooms);
+        setRooms(rooms);
+      });
+    });
+    // setRooms(loadedRooms);
   }, []);
 
   const openModal = () => {
@@ -42,7 +54,16 @@ export default function MainDashboard() {
   };
 
   const onNewRoomSubmit = (room: Room) => {
-    setRooms([...rooms, room]);
+    fetch(`http://localhost:3000/api/rooms`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(room),
+    }).then((response) => {
+      console.log("Response:", response);
+      setRooms([...rooms, room]);
+    });
   };
 
   const onNewReservationSubmition = (reservation: Reservation) => {

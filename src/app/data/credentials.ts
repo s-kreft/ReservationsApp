@@ -1,5 +1,7 @@
 `use server`;
-import { UserRole, User } from "@/app/types";
+import { UserRole, User, Room } from "@/app/types";
+
+import roomsData from "@/app/data/roomsData.json";
 
 export const users: User[] = [
   { id: "1", name: "Alice", password: "alice", role: "customer" },
@@ -9,15 +11,31 @@ export const users: User[] = [
 
 export type DataSource = {
   users: User[];
+  rooms: Room[];
 };
 
 export const DataSourceContext = {
   users,
+  rooms: [
+    { id: 1, name: "Conference Room", description: "A room for meetings" },
+    {
+      id: 2,
+      name: "Training Room",
+      description: "A room for training sessions",
+    },
+    {
+      id: 3,
+      name: "Breakout Room",
+      description: "A room for small group discussions",
+    },
+    ...(roomsData as Room[]),
+  ] as Room[],
 };
 
 export async function db(): Promise<DataSource> {
   return {
     users: await users,
+    rooms: await DataSourceContext.rooms,
   };
 }
 
