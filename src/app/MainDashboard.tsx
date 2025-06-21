@@ -17,7 +17,7 @@ export default function MainDashboard() {
   const { t } = useTranslation();
   // const [rooms, setRooms] = useState<Room[]>([]);
   const { rooms, dispatch } = useContext(RoomsContext);
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  // const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
@@ -73,12 +73,21 @@ export default function MainDashboard() {
   };
 
   const onNewReservationSubmition = (reservation: Reservation, room: Room) => {
-    dispatch({
-      type: RoomActionType.Update,
-      room: {
-        ...room,
-        reservations: [...(room.reservations ?? []), reservation],
+    fetch(`http://localhost:3000/api/reservations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ reservation, roomId: room.id }),
+    }).then(() => {
+      dispatch({
+        type: RoomActionType.Update,
+        room: {
+          ...room,
+          reservations: [...(room.reservations ?? []), reservation],
+        },
+      });
+      setIsReservationModalOpen(false);
     });
   };
 
@@ -96,7 +105,7 @@ export default function MainDashboard() {
           <NewRoomForm onNewRoomSubmit={onNewRoomSubmit}></NewRoomForm>
         </ReusableModal>
       )}
-      {isReservationModalOpen && (
+      {isReservationModalOpen && selectedRoom && (
         <ReusableModal
           isOpen={isReservationModalOpen}
           onClose={closeReservationModal}

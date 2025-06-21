@@ -36,7 +36,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <NavBar></NavBar>
-          <RoomsProvider initialValue={rooms}>
+          <RoomsProvider initialValue={[]}>
+            {/* <RoomsProvider initialValue={rooms}> */}
             <UserProvider initialValue={[]}>{children}</UserProvider>
           </RoomsProvider>
         </body>

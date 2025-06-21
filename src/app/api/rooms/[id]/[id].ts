@@ -9,11 +9,10 @@ export default async function handler(
   const data = await db();
   const { id } = req.query;
   console.log("Request received for room ID:", id);
-  return new Response(
-    JSON.stringify(data.rooms.filter((room) => room.id === Number(id))),
-    {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  const roomFound = data.rooms.filter((room) => room.id === Number(id));
+  console.log("Room found:", roomFound);
+  return new Response(JSON.stringify(roomFound), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
 }

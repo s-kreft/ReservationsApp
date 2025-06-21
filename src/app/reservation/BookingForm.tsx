@@ -18,8 +18,8 @@ export default function BookingForm({
   const formik = useFormik({
     initialValues: {
       userName: "",
-      dateStart: new Date(),
-      dateEnd: new Date(),
+      dateStart: "",
+      dateEnd: "",
       comments: "",
     },
     onSubmit: (values) => {
@@ -40,17 +40,33 @@ export default function BookingForm({
         <legend className="fieldset-legend">Booking Form</legend>
 
         <label className="label">Start Date</label>
-        <DatePicker
+        {/* <DatePicker
           selected={formik.values.dateStart}
           onChange={(date) => formik.setFieldValue("dateStart", date)}
           className="input"
-        />
+        /> */}
+        <input
+          id="dateStart"
+          type="date"
+          className="input"
+          value={formik.values.dateStart}
+          onChange={formik.handleChange}
+        ></input>
 
         <label className="label">End Date</label>
-        <DatePicker
+        {/* <DatePicker
           selected={formik.values.dateEnd}
           onChange={(date) => formik.setFieldValue("dateEnd", date)}
           className="input"
+        /> */}
+
+        <input
+          id="dateEnd"
+          type="date"
+          className="input"
+          value={formik.values.dateEnd}
+          onChange={formik.handleChange}
+          // className="input"
         />
 
         <label className="label">Comments</label>

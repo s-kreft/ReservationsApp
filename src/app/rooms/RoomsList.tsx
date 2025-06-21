@@ -3,7 +3,7 @@ import { Room } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 import { RoomActionType, RoomsContext } from "../lib/roomsContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 type RoomListProps = {
   rooms: Room[];
@@ -16,10 +16,12 @@ export default function RoomList({
 }: RoomListProps) {
   const { t } = useTranslation();
   const roomsContext = useContext(RoomsContext);
-  roomsContext.dispatch({
-    type: RoomActionType.SetRooms,
-    rooms: rooms,
-  });
+  useEffect(() => {
+    roomsContext.dispatch({
+      type: RoomActionType.SetRooms,
+      rooms: rooms,
+    });
+  }, []);
   return (
     <ul className="list bg-base-100 rounded-box shadow-md">
       <li className="p-4 pb-2 text-xs opacity-60 tracking-wide"></li>

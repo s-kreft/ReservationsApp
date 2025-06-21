@@ -1,7 +1,7 @@
 export type Reservation = {
   userName?: string;
-  dateStart: Date;
-  dateEnd: Date;
+  dateStart: string;
+  dateEnd: string;
   comments: string;
 };
 
