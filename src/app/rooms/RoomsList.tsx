@@ -1,6 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { Room } from "../types";
 import Image from "next/image";
+import Link from "next/link";
+import { RoomActionType, RoomsContext } from "../lib/roomsContext";
+import { useContext } from "react";
 
 type RoomListProps = {
   rooms: Room[];
@@ -12,6 +15,11 @@ export default function RoomList({
   openReservationModal,
 }: RoomListProps) {
   const { t } = useTranslation();
+  const roomsContext = useContext(RoomsContext);
+  roomsContext.dispatch({
+    type: RoomActionType.SetRooms,
+    rooms: rooms,
+  });
   return (
     <ul className="list bg-base-100 rounded-box shadow-md">
       <li className="p-4 pb-2 text-xs opacity-60 tracking-wide"></li>
@@ -38,6 +46,10 @@ export default function RoomList({
             </div>
           </div>
           <p className="list-col-wrap text-xs">{room.description}</p>
+          <Link href={`/rooms/${room.id}`}>
+            <button className="btn btn-accent">{t("Reservations")}</button>
+          </Link>
+
           <button className="btn btn-neutral" onClick={openReservationModal}>
             {t("Reserve")}
           </button>

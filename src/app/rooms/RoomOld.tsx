@@ -1,4 +1,4 @@
-// export default function Room() {
+// export default function RoomOld() {
 //   <li className="list-row">
 //     <div>
 //       <img

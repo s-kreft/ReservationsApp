@@ -5,7 +5,9 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import UserProvider from "./lib/usersContext";
 import NavBar from "./components/NavBar";
+import rooms from "@/app/data/roomsData.json";
 import "./i18n";
+import RoomsProvider from "./lib/roomsContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,9 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <NavBar></NavBar>
-          <UserProvider initialValue={[]}>{children}</UserProvider>
+          <RoomsProvider initialValue={rooms}>
+            <UserProvider initialValue={[]}>{children}</UserProvider>
+          </RoomsProvider>
         </body>
       </SessionProvider>
     </html>

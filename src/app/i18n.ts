@@ -13,6 +13,7 @@ const resources = {
       Reserve: "Reserve",
       Edit: "Edit",
       Remove: "Remove",
+      Reservations: "Reservations",
     },
   },
   pl: {
@@ -23,6 +24,7 @@ const resources = {
       Reserve: "Zarezerwuj",
       Edit: "Edytuj",
       Remove: "Usuń",
+      Reservations: "Rezerwacje",
     },
   },
 };
