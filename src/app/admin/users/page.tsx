@@ -2,14 +2,17 @@ import React from "react";
 import UsersList from "@/app/components/UsersList";
 import UserProvider from "@/app/lib/usersContext";
 import { getUsers } from "@/app/data/credentials";
+import { RequireRole } from "@/app/login/RequireRole";
 
 export default async function Users() {
   const users = getUsers();
   return (
     <>
-      <UserProvider initialValue={await users}>
-        <UsersList />
-      </UserProvider>
+      <RequireRole allowedRoles={["admin"]}>
+        <UserProvider initialValue={await users}>
+          <UsersList />
+        </UserProvider>
+      </RequireRole>
     </>
   );
 }

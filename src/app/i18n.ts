@@ -10,6 +10,9 @@ const resources = {
       "Welcome to React": "Welcome to React and react-i18next",
       test: "This is a test translation",
       "Add New Room": "Add New Room",
+      Reserve: "Reserve",
+      Edit: "Edit",
+      Remove: "Remove",
     },
   },
   pl: {
@@ -17,6 +20,9 @@ const resources = {
       "Welcome to React": "Bienvenue à React et react-i18next",
       test: "To jest testowe tłumaczenie",
       "Add New Room": "Dodaj nowy pokój",
+      Reserve: "Zarezerwuj",
+      Edit: "Edytuj",
+      Remove: "Usuń",
     },
   },
 };

@@ -8,6 +8,7 @@ import {
   handleUpdateUser,
 } from "../admin/users/page";
 import EditUser from "./EditUser";
+import { useTranslation } from "react-i18next";
 
 export default function UsersList() {
   const DeleteUserModal = useRef<HTMLDialogElement>(null);
@@ -15,6 +16,7 @@ export default function UsersList() {
   const { users: savedUsers, dispatch } = useContext(UserContext);
 
   const [selectedUser, setSelectedUser] = useState<User>();
+  const { t } = useTranslation();
 
   const openEditUserModal = () => {
     EditUserModal.current?.showModal();
@@ -42,13 +44,13 @@ export default function UsersList() {
     <div className="overflow-x-auto">
       <table className="table w-full">
         <thead>
-          <tr>
+          {/* <tr>
             <th></th>
             <th>Name</th>
             <th>Role</th>
             <th>Status</th>
             <th>Actions</th>
-          </tr>
+          </tr> */}
         </thead>
         <tbody>
           {savedUsers.map((user) => (
@@ -70,7 +72,7 @@ export default function UsersList() {
                     openEditUserModal();
                   }}
                 >
-                  Edit
+                  {t("Edit")}
                 </button>
                 <button
                   className="btn btn-sm btn-secondary"
@@ -79,7 +81,7 @@ export default function UsersList() {
                     DeleteUserModal.current?.showModal();
                   }}
                 >
-                  Remove
+                  {t("Remove")}
                 </button>
               </td>
             </tr>

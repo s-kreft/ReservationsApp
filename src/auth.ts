@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         let cachedUser = users.find((u) => u.name === user.name);
         if (cachedUser) {
-          token.role = "admin";
+          token.role = cachedUser.role || "user";
         } else {
           token.role = "user";
         }
