@@ -15,7 +15,11 @@ export const ReusableModal: React.FC<AddExpenseFormModalProps> = ({
 }) => {
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    modal.current?.showModal();
+    if (isOpen) {
+      modal.current?.showModal();
+    } else {
+      modal.current?.close();
+    }
   }, [isOpen]);
 
   return (

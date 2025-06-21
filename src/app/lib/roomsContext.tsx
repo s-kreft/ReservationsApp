@@ -43,11 +43,11 @@ export default function RoomsProvider({
         return [...state, action.room];
       }
       case RoomActionType.Remove: {
-        return state.filter((user) => user.id !== action.roomId);
+        return state.filter((room) => room.id !== action.roomId);
       }
       case RoomActionType.Update: {
-        return state.map((user) =>
-          user.id === action.room.id ? action.room : user
+        return state.map((room) =>
+          room.id === action.room.id ? action.room : room
         );
       }
     }

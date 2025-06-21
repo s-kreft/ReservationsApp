@@ -18,17 +18,29 @@ export type DataSource = {
 export const DataSourceContext = {
   users,
   rooms: [
-    { id: 1, name: "Conference Room", description: "A room for meetings" },
-    {
-      id: 2,
-      name: "Training Room",
-      description: "A room for training sessions",
-    },
-    {
-      id: 3,
-      name: "Breakout Room",
-      description: "A room for small group discussions",
-    },
+    // {
+    //   id: 1,
+    //   name: "Conference Room",
+    //   description: "A room for meetings",
+    //   reservations: [
+    //     {
+    //       dateStart: "2025-07-01T14:00:00.000Z",
+    //       dateEnd: "2025-07-05T10:00:00.000Z",
+    //       comments: "Reserved for annual conference",
+    //       userName: "Alice",
+    //     },
+    //   ],
+    // },
+    // {
+    //   id: 2,
+    //   name: "Training Room",
+    //   description: "A room for training sessions",
+    // },
+    // {
+    //   id: 3,
+    //   name: "Breakout Room",
+    //   description: "A room for small group discussions",
+    // },
     ...(roomsData as Room[]),
   ] as Room[],
 };

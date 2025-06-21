@@ -2,7 +2,15 @@
   {
     "id": 1,
     "name": "Ocean View Suite",
-    "description": "A spacious suite with a beautiful view of the ocean. Includes a king-size bed and private balcony."
+    "description": "A spacious suite with a beautiful view of the ocean. Includes a king-size bed and private balcony.",
+    "reservations": [
+      {
+        "dateStart": "2025-07-01T14:00:00.000Z",
+        "dateEnd": "2025-07-05T10:00:00.000Z",
+        "comments": "Reserved for annual conference",
+        "userName": "Alice"
+      }
+    ]
   },
   {
     "id": 2,

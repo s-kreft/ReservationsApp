@@ -13,12 +13,33 @@ export default function Room() {
 
     setRoomDetails(room);
   }, []);
+
+  // useEffect(() => {
+  //   setRoomDetails(
+  //     rooms.find((room) => room.id === Number(params.id)) as types.Room
+  //   );
+  // }, [params.id, rooms]);
   const [roomDetails, setRoomDetails] = useState<types.Room>();
+
+  if (!roomDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
       <h1>Details of room {roomDetails?.name}</h1>
-      <p>Here you can view and manage the details of a specific room.</p>
+
+      <p>
+        {roomDetails?.reservations?.map((res, index) => (
+          <div key={index}>
+            <span>
+              {new Date(res.dateStart)?.toLocaleDateString()} -{" "}
+              {new Date(res.dateEnd)?.toLocaleDateString()}
+            </span>
+            <span> by {res?.userName}</span>
+          </div>
+        ))}
+      </p>
     </div>
   );
 }

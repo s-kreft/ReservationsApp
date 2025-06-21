@@ -7,7 +7,7 @@ import { useContext } from "react";
 
 type RoomListProps = {
   rooms: Room[];
-  openReservationModal: () => void;
+  openReservationModal: (room: Room) => void;
 };
 
 export default function RoomList({
@@ -50,7 +50,10 @@ export default function RoomList({
             <button className="btn btn-accent">{t("Reservations")}</button>
           </Link>
 
-          <button className="btn btn-neutral" onClick={openReservationModal}>
+          <button
+            className="btn btn-neutral"
+            onClick={() => openReservationModal(room)}
+          >
             {t("Reserve")}
           </button>
         </li>

@@ -1,5 +1,5 @@
 export type Reservation = {
-  userName: string;
+  userName?: string;
   dateStart: Date;
   dateEnd: Date;
   comments: string;
@@ -18,4 +18,5 @@ export type Room = {
   id: number;
   name: string;
   description: string;
+  reservations?: Reservation[];
 };

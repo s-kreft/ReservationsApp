@@ -20,6 +20,7 @@ export default function MainDashboard() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/rooms`, {
@@ -45,12 +46,14 @@ export default function MainDashboard() {
     setIsModalOpen(false);
   };
 
-  const openReservationModal = () => {
+  const openReservationModal = (room: Room) => {
     setIsReservationModalOpen(true);
+    setSelectedRoom(room);
   };
 
   const closeReservationModal = () => {
     setIsReservationModalOpen(false);
+    setSelectedRoom(null);
   };
 
   const onNewRoomSubmit = (room: Room) => {
@@ -69,8 +72,14 @@ export default function MainDashboard() {
     });
   };
 
-  const onNewReservationSubmition = (reservation: Reservation) => {
-    setReservations([...reservations, reservation]);
+  const onNewReservationSubmition = (reservation: Reservation, room: Room) => {
+    dispatch({
+      type: RoomActionType.Update,
+      room: {
+        ...room,
+        reservations: [...(room.reservations ?? []), reservation],
+      },
+    });
   };
 
   return (
@@ -94,6 +103,7 @@ export default function MainDashboard() {
         >
           <BookingForm
             onNewReservationSubmit={onNewReservationSubmition}
+            room={selectedRoom}
           ></BookingForm>
         </ReusableModal>
       )}
